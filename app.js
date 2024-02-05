@@ -4,8 +4,9 @@ let btns = ['yellow', 'red', 'purple', 'green']
 let started = true
 let lavel = 0;
 let h2 = document.querySelector('h2')
+let mybtn = document.querySelector('#mybtn')
 
-document.addEventListener('keypress', () => {
+mybtn.addEventListener('click', () => {
     if (started == true) {
         lavelup();
         started = false;
@@ -33,20 +34,30 @@ function lavelup(){
     let randombtn = document.querySelector(`.${randomcolor}`);
     gameseq.push(randomcolor);
     gameflash(randombtn);
-    // heighest(lavel)
+    heighest(lavel)
 }
-//store heighest value on there 
-// let topscore  = document.querySelector('h3')
-// function heighest(level){
-//      topscore.innerText = `heighest score: ${lavel}`;
-//      let store = localStorage.getItem(level)    
-//      if(level > store){
-//      localStorage.setItem(level)
-//      }
-// };
-// window.onload = function(){
-//     topscore.innerText = store
-// }
+// store heighest value on there 
+let topscore = document.querySelector('h3');
+
+function heighest(level) {
+    topscore.innerText = `Highest score: ${level}`;
+
+    // Retrieve the current highest score for this level from local storage
+    let storedScore = localStorage.getItem('highestScore_' + lavel);
+
+    if (!storedScore || level > parseInt(storedScore)) {
+        // Update local storage if there's no score or the current score is higher
+        localStorage.setItem('highestScore_' + lavel, level);
+    }
+}
+
+window.onload = function () {
+    // Load the highest score for the current level from local storage
+    let storedScore = localStorage.getItem('highestScore_' + lavel);
+    if (storedScore) {
+        topscore.innerText = `Highest score: ${storedScore}`;
+    }
+}
 
 
 function cheAns(idx) {
